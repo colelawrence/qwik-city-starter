@@ -1,4 +1,17 @@
+# Qwik City, Builder.io starter with Auth.js Email and Drizzle ORM
+
+## Major dependencies
+
+- Qwik: A resumable UI architecture, designed from the ground-up for speed.
+- Qwik-City: "Next.js" equivalent with modern dev tooling and seemless client-server requesting with [`server$`](https://qwik.builder.io/docs/server$/)
+- Drizzle: A minimal SQL querying ORM which leverages prepared queries for performance
+- PostgreSQL: By far the most widely supported and portable database with incredible performance
+
 # Qwik City App ⚡️
+
+Below is the README that comes with setting up a qwik-city project with builder.
+
+---
 
 - [Qwik Docs](https://qwik.builder.io/)
 - [Discord](https://qwik.builder.io/chat)

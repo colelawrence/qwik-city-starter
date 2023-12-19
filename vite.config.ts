@@ -7,5 +7,12 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig(() => {
   return {
     plugins: [builderDevTools(), qwikCity(), qwikVite(), tsconfigPaths()],
+    server: {
+      port: 5080,
+    },
+    optimizeDeps: { include: [
+      // See https://qwik.builder.io/docs/integrations/authjs/
+      '@auth/core'
+    ] }
   };
 });
