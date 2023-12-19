@@ -7,6 +7,7 @@ import {
 } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "@auth/core/adapters";
 
+/** Structure is initially informed by the needs of being an Auth.js adapter */
 export const authUsers = pgTable("auth_users", {
   id: text("id").notNull().primaryKey(),
   name: text("name"),
@@ -15,6 +16,7 @@ export const authUsers = pgTable("auth_users", {
   image: text("image"),
 });
 
+/** Structure is initially informed by the needs of being an Auth.js adapter */
 export const authAccounts = pgTable(
   "auth_accounts",
   {
@@ -33,10 +35,13 @@ export const authAccounts = pgTable(
     session_state: text("session_state"),
   },
   (account) => ({
-    compoundKey: primaryKey(account.provider, account.providerAccountId),
+    compoundKey: primaryKey({
+      columns: [account.provider, account.providerAccountId],
+    }),
   })
 );
 
+/** Structure is initially informed by the needs of being an Auth.js adapter */
 export const authSessions = pgTable("auth_sessions", {
   sessionToken: text("sessionToken").notNull().primaryKey(),
   userId: text("userId")
@@ -45,6 +50,7 @@ export const authSessions = pgTable("auth_sessions", {
   expires: timestamp("expires", { mode: "date" }).notNull(),
 });
 
+/** Structure is initially informed by the needs of being an Auth.js adapter */
 export const authVerificationTokens = pgTable(
   "auth_verification_tokens",
   {
@@ -53,6 +59,6 @@ export const authVerificationTokens = pgTable(
     expires: timestamp("expires", { mode: "date" }).notNull(),
   },
   (vt) => ({
-    compoundKey: primaryKey(vt.identifier, vt.token),
+    compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
   })
 );
