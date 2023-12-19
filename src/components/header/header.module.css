@@ -8,43 +8,43 @@
 
 .logo {
   display: inline-block;
-}
-.logo a {
-  display: block;
+
+  a {
+    display: block;
+  }
 }
 
 .header {
   background-color: var(--header-background);
-}
 
-.header ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  gap: 30px;
-}
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 30px;
 
-.header li {
-  display: none;
-  margin: 0;
-  padding: 0;
-  font-size: 0.8rem;
-}
+    @media (max-width: 450px) {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
 
-.header li a {
-  color: white;
-  display: inline-block;
-  padding: 0;
-  text-decoration: none;
-}
+  li {
+    display: block;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8rem;
 
-.header li a:hover {
-  color: var(--qwik-light-blue);
-}
+    a {
+      color: white;
+      display: inline-block;
+      padding: 0;
+      text-decoration: none;
 
-@media (min-width: 450px) {
-  .header li {
-    display: inline-block;
+      &:hover {
+        color: var(--qwik-light-blue);
+      }
+    }
   }
 }
