@@ -10,6 +10,16 @@ export default defineConfig(() => {
     server: {
       port: 5080,
     },
+    dev: {
+      headers: {
+        'Cache-Control': 'public, max-age=0',
+      },
+    },
+    preview: {
+      headers: {
+        'Cache-Control': 'public, max-age=600',
+      },
+    },
     optimizeDeps: { include: [
       // See https://qwik.builder.io/docs/integrations/authjs/
       '@auth/core'

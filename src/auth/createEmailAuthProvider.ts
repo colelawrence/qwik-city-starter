@@ -3,13 +3,19 @@ import Email, { EmailConfig } from "@auth/core/providers/email";
 import { ILogger } from "@autoplay/workerlog";
 import nodemailer from "nodemailer";
 import { expectEnvVar } from "~/expectEnvVar";
+import { EnvGetter } from "~/utils/EnvGetter";
 
-export function createEmailAuthProvider(logger: ILogger): EmailConfig {
+export function createEmailAuthProvider(
+  env: EnvGetter,
+  logger: ILogger
+): EmailConfig {
   return Email({
     from: `${expectEnvVar(
+      env,
       "APP_EMAIL_SENDER",
       "for sender name a verification request"
     )} <${expectEnvVar(
+      env,
       "APP_EMAIL_SUPPORT_REPLY_TO",
       "for sender email for a verification request"
     )}>`,
@@ -25,11 +31,12 @@ async function sendVerificationRequest(
     provider: { server, from },
   }: SendVerificationRequestParams
 ) {
-  const { host } = new URL(url);
-  if (host === "localhost") {
+  const { hostname, host } = new URL(url);
+  if (hostname === "localhost") {
     logger.warn(`📧 Email verification is in dev mode`, { email, url });
     return;
   }
+  logger.debug("sending verification email", { url, toEmail: email });
 
   const transport = nodemailer.createTransport(server);
   await transport.sendMail({
