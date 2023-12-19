@@ -8,6 +8,7 @@ import {
 } from "./auth-tables-schema";
 import { and, eq } from "drizzle-orm";
 
+/** Adjusted from @auth/drizzle-adapter  */
 export function authPgDrizzleAdapter(
   client: InstanceType<typeof PgDatabase>
 ): Adapter {

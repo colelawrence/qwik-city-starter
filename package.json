@@ -51,7 +51,6 @@
     "vite-tsconfig-paths": "^4.2.1"
   },
   "dependencies": {
-    "@auth/drizzle-adapter": "^0.3.11",
     "@autoplay/workerlog": "^0.3.0",
     "drizzle-orm": "^0.29.1",
     "nodemailer": "^6.9.7",
