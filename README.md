@@ -1,5 +1,25 @@
 # Qwik City, Builder.io starter with Auth.js Email and Drizzle ORM
 
+You might follow the Prisma guide, [Setting up a local PostgreSQL database](https://www.prisma.io/dataguide/postgresql/setting-up-a-local-postgresql-database), for getting PostgreSQL running locally for development.
+
+1. Start up a local PostgreSQL server with matching credentials to the [.env](./.env) conneciton string.
+
+2. Run Drizzle ORM migrations on database
+
+```sh
+# Run initial migrations on pg
+pnpm db:generate
+```
+
+3. Start dev
+
+```sh
+# Run dev qwik city server
+pnpm dev
+```
+
+4. Open https://localhost:5080
+
 ## Major dependencies
 
 - Qwik: A resumable UI architecture, designed from the ground-up for speed.
