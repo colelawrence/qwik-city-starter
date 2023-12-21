@@ -24,8 +24,9 @@ export class ServerCtx {
       "logging level",
       "trace",
     );
-    const minLevel =
-      WorkerLoggerLevel[level.toUpperCase() as keyof typeof WorkerLoggerLevel];
+    const minLevel = WorkerLoggerLevel[
+      level.toUpperCase() as keyof typeof WorkerLoggerLevel
+    ] as WorkerLoggerLevel | undefined;
     if (minLevel == null) {
       throw new Error(
         `Invalid APP_LOG_LEVEL: ${level}, expected one of ${Object.keys(

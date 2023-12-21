@@ -28,7 +28,7 @@
       @apply inline-block p-0 text-white no-underline;
 
       &:hover {
-        @apply text-qwik-light-blue;
+        @apply text-blue-500;
       }
     }
   }

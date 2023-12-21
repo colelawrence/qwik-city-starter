@@ -25,7 +25,7 @@ export function expectEnvVar(
         errors.length = 0;
         if (env.get("NODE_ENV") === "development") {
           console.error(
-            "If you're in local development, ensure you've copied and customized ./.env.local.example to ./.env.local for server variables.",
+            "If you're in local development, ensure you've copied and customized ./.env.example to ./.env.local for server variables.",
           );
         }
         process.exit(1);

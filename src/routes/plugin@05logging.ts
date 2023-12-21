@@ -1,6 +1,6 @@
 import type { ILogger } from "@autoplay/workerlog";
-import { routeLoader$, type RequestHandler } from "@builder.io/qwik-city";
-import { loadRequestCtx } from "./plugin@01requestCtx";
+import { type RequestHandler } from "@builder.io/qwik-city";
+import { loadRequestCtx, useRequestCtx } from "./plugin@01requestCtx";
 
 const REQUEST_WARNING_THRESHOLD = 400;
 
@@ -58,17 +58,13 @@ export const onRequest: RequestHandler = async ({
     } else {
       log.debug("request complete", attrs);
     }
+  }
 
-    if (caughtError) {
-      throw caughtError;
-    }
+  if (caughtError) {
+    throw caughtError;
   }
 };
 
-const useRequestContextLoader = routeLoader$(({ sharedMap }) => {
-  return loadRequestCtx(sharedMap);
-});
-
 export function useRequestLogger(name: string, key?: string | number): ILogger {
-  return useRequestContextLoader().value.getLogger(name, key);
+  return useRequestCtx().value.getLogger(name, key);
 }

@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "unifiedjs.vscode-mdx",
+    "vunguyentuan.vscode-postcss",
+    "vunguyentuan.vscode-css-variables",
+    "esbenp.prettier-vscode",
+    "rvest.vs-code-prettier-eslint",
+    "clinyong.vscode-css-modules"
+  ],
+  "unwantedRecommendations": []
+}

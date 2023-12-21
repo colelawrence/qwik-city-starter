@@ -1,5 +1,5 @@
 /** App environment variables */
-declare interface AppEnvPublic {
+declare interface AppEnv {
   /**
    * CMS API key for Builder.io
    * https://www.builder.io/c/docs/using-your-api-key
@@ -13,10 +13,6 @@ declare interface AppEnvPublic {
   APP_EMAIL_SENDER: string;
   /** @example "debug" */
   APP_LOG_LEVEL: string;
-}
-
-/** In development, these should come from the `./.env.local` file */
-declare interface AppEnvServer extends AppEnvPublic {
   /**
    * Postgres connection string
    *
