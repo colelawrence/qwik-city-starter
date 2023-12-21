@@ -3,7 +3,7 @@ import { EnvGetter } from "./utils/EnvGetter";
 const errors: Error[] = [];
 export function expectEnvVar(
   env: EnvGetter,
-  name: keyof AppEnv,
+  name: keyof AppEnvServer,
   purpose: string
 ): string {
   const value = env.get(name);
@@ -20,6 +20,11 @@ export function expectEnvVar(
         console.error("Missing environment variables:");
         errors.forEach((error) => console.error(error));
         errors.length = 0;
+        if (env.get("NODE_ENV") === "development") {
+          console.error(
+            "If you're in local development, ensure you've copied and customized ./.env.local.example to ./.env.local for server variables."
+          );
+        }
         process.exit(1);
       }
     });

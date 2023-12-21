@@ -1,5 +1,5 @@
 /** App environment variables */
-declare interface AppEnv {
+declare interface AppEnvPublic {
   /**
    * CMS API key for Builder.io
    * https://www.builder.io/c/docs/using-your-api-key
@@ -7,6 +7,14 @@ declare interface AppEnv {
    * @example "d6f1f0d3d9e84b7f8b9b1c0f4d0a4d9a"
    */
   PUBLIC_BUILDER_API_KEY: string;
+  /** @example "support@dogwalkie.com" */
+  APP_EMAIL_SUPPORT_REPLY_TO: string;
+  /** @example "Dog Walkie" */
+  APP_EMAIL_SENDER: string;
+}
+
+/** In development, these should come from the `./.env.local` file */
+declare interface AppEnvServer extends AppEnvPublic {
   /**
    * Postgres connection string
    *
@@ -19,8 +27,4 @@ declare interface AppEnv {
    * @example "a0_dm@ab.v89aw9Uw67Y6aw%$35^o7"
    */
   AUTH_SECRET: string;
-  /** @example "support@dogwalkie.com" */
-  APP_EMAIL_SUPPORT_REPLY_TO: string;
-  /** @example "Dog Walkie" */
-  APP_EMAIL_SENDER: string;
 }
