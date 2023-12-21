@@ -1,6 +1,5 @@
-import type { ILogger } from "@autoplay/workerlog";
 import { type RequestHandler } from "@builder.io/qwik-city";
-import { loadRequestCtx, useRequestCtx } from "./plugin@01requestCtx";
+import { getRequestCtx } from "./plugin@01requestCtx";
 
 const REQUEST_WARNING_THRESHOLD = 400;
 
@@ -12,7 +11,7 @@ export const onRequest: RequestHandler = async ({
   status,
   headers,
 }) => {
-  const ctx = loadRequestCtx(sharedMap);
+  const ctx = getRequestCtx(sharedMap);
   // could use performance.now for sub-millisecond accuracy, but we're keeping it simple
   const startAt = Date.now();
   const log = ctx.getLogger("public-request");
@@ -64,7 +63,3 @@ export const onRequest: RequestHandler = async ({
     throw caughtError;
   }
 };
-
-export function useRequestLogger(name: string, key?: string | number): ILogger {
-  return useRequestCtx().value.getLogger(name, key);
-}

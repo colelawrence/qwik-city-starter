@@ -3,11 +3,11 @@ import { serverAuth$ } from "@builder.io/qwik-auth";
 import { authPgDrizzleAdapter } from "~/auth/authPgDrizzleAdapter";
 import { expectEnvVar } from "~/expectEnvVar";
 import { createEmailAuthProvider } from "../auth/createEmailAuthProvider";
-import { loadRequestCtx } from "./plugin@01requestCtx";
+import { getRequestCtx } from "./plugin@01requestCtx";
 
 export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
   serverAuth$(({ env, sharedMap }) => {
-    const ctx = loadRequestCtx(sharedMap);
+    const ctx = getRequestCtx(sharedMap);
     const logger = ctx.getLogger("auth");
     return {
       secret: expectEnvVar(

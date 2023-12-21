@@ -1,11 +1,11 @@
 import { component$ } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import {
   Content,
   fetchOneEntry,
   getBuilderSearchParams,
 } from "@builder.io/sdk-qwik";
+import { RouterHead } from "~/components/router-head/router-head";
 import { expectEnvVar } from "~/expectEnvVar";
 import { CUSTOM_COMPONENTS } from "../../components/builder-registry";
 
@@ -50,17 +50,16 @@ export const useBuilderProps = routeLoader$(async ({ url, error, env }) => {
 
 export default component$(() => {
   const content = useBuilderProps();
+  const { data } = content.value.content ?? {};
 
   return (
     <>
+      {data?.title && (
+        <RouterHead>
+          <title>{data.title}</title>
+        </RouterHead>
+      )}
       <Content {...content.value} customComponents={CUSTOM_COMPONENTS} />
     </>
   );
 });
-
-export const head: DocumentHead = ({ resolveValue }) => {
-  const builderContent = resolveValue(useBuilderProps);
-  return {
-    title: builderContent.content?.data?.title,
-  };
-};

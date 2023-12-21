@@ -1,4 +1,4 @@
-import { routeLoader$, type RequestHandler } from "@builder.io/qwik-city";
+import { type RequestHandler } from "@builder.io/qwik-city";
 import { RequestCtx } from "~/RequestCtx";
 import { ServerCtx } from "~/ServerCtx";
 import { generateID } from "~/utils/generateID";
@@ -23,10 +23,6 @@ export const onRequest: RequestHandler = async ({ next, sharedMap, env }) => {
   await next();
 };
 
-export const loadRequestCtx = (sharedMap: Map<string, unknown>) => {
+export const getRequestCtx = (sharedMap: Map<string, unknown>) => {
   return sharedMap.get(REQUEST_CTX_SHARED_MAP_KEY) as RequestCtx;
 };
-
-export const useRequestCtx = routeLoader$(({ sharedMap }) =>
-  loadRequestCtx(sharedMap),
-);
