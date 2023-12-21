@@ -6,7 +6,12 @@ import { loadRequestDisposePool } from "./plugin@00requestDisposePool";
 
 const REQUEST_CTX_SHARED_MAP_KEY = "reqctx";
 
-export const onRequest: RequestHandler = async ({ next, sharedMap, env }) => {
+export const onRequest: RequestHandler = async ({
+  next,
+  sharedMap,
+  env,
+  headers,
+}) => {
   const server = new ServerCtx({
     env,
     maxPgConnections: 1,
@@ -20,6 +25,7 @@ export const onRequest: RequestHandler = async ({ next, sharedMap, env }) => {
     server,
   });
   sharedMap.set(REQUEST_CTX_SHARED_MAP_KEY, reqctx);
+  headers.set("x-trace-id", traceID);
   await next();
 };
 
