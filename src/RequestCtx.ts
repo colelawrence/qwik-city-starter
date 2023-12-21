@@ -1,8 +1,8 @@
-import { PostgresJsDatabase, drizzle } from "drizzle-orm/postgres-js";
-import * as schema from "./drizzle-schema";
-import { ILogger } from "@autoplay/workerlog";
-import { DisposePool } from "./utils/DisposePool";
-import { ServerCtx } from "./ServerCtx";
+import type { ILogger } from "@autoplay/workerlog";
+import type { PostgresJsDatabase } from "drizzle-orm/postgres-js";
+import type { ServerCtx } from "./ServerCtx";
+import type * as schema from "./drizzle-schema";
+import type { DisposePool } from "./utils/DisposePool";
 
 export class RequestCtx {
   constructor(
@@ -12,7 +12,7 @@ export class RequestCtx {
       traceID: string;
       /** Open for the duration of the request */
       pool: DisposePool;
-    }
+    },
   ) {}
   /** Opened connections may be disposed at the end of the request */
   drizzle(logger: ILogger): PostgresJsDatabase<typeof schema> {

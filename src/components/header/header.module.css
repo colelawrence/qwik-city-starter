@@ -1,16 +1,12 @@
 .wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 auto;
-  padding: 30px 40px;
+  @apply mx-auto flex items-center justify-between px-10 py-8;
 }
 
 .logo {
-  display: inline-block;
+  @apply inline-block;
 
   a {
-    display: block;
+    @apply block;
   }
 }
 
@@ -18,32 +14,21 @@
   background-color: var(--header-background);
 
   ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    gap: 30px;
+    @apply m-0 flex list-none gap-6 p-0;
 
     @media (max-width: 450px) {
-      flex-direction: column;
-      gap: 10px;
+      @apply flex-col gap-2;
     }
   }
 
   li {
-    display: block;
-    margin: 0;
-    padding: 0;
-    font-size: 0.8rem;
+    @apply m-0 block p-0 text-sm;
 
     a {
-      color: white;
-      display: inline-block;
-      padding: 0;
-      text-decoration: none;
+      @apply inline-block p-0 text-white no-underline;
 
       &:hover {
-        color: var(--qwik-light-blue);
+        @apply text-qwik-light-blue;
       }
     }
   }

@@ -1,4 +1,4 @@
-import { ILogger } from "@autoplay/workerlog";
+import type { ILogger } from "@autoplay/workerlog";
 import { routeLoader$, type RequestHandler } from "@builder.io/qwik-city";
 import { loadRequestCtx } from "./plugin@01requestCtx";
 

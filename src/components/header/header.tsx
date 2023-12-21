@@ -1,12 +1,12 @@
 import { component$ } from "@builder.io/qwik";
-import { QwikLogo } from "../icons/qwik";
-import styles from "./header.module.css";
+import { useAppURL } from "~/routes/layout";
 import {
   useAuthSession,
   useAuthSignin,
   useAuthSignout,
 } from "~/routes/plugin@10auth";
-import { useAppURL } from "~/routes/layout";
+import { QwikLogo } from "../icons/qwik";
+import styles from "./header.module.css";
 
 export default component$(() => (
   <header class={styles.header}>
@@ -61,7 +61,7 @@ const HeaderAuthControl = component$(() => {
 const LoginButton = component$(() => {
   const signIn = useAuthSignin();
   signIn.value?.failed &&
-    console.log("signIn.value?.failed", signIn.value?.failed);
+    console.log("signIn.value?.failed", signIn.value.failed);
   const callbackUrl = useAppURL("/");
   console.log(callbackUrl);
   return (
@@ -69,7 +69,7 @@ const LoginButton = component$(() => {
       onClick$={() =>
         signIn.submit({
           // providerId: "email",
-          callbackUrl,
+          options: { callbackUrl },
         })
       }
     >

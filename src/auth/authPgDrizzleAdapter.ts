@@ -1,16 +1,16 @@
-import { Adapter } from "@auth/core/adapters";
-import { PgDatabase } from "drizzle-orm/pg-core";
+import type { Adapter } from "@auth/core/adapters";
+import { and, eq } from "drizzle-orm";
+import type { PgDatabase } from "drizzle-orm/pg-core";
 import {
   authAccounts,
   authSessions,
   authUsers,
   authVerificationTokens,
 } from "./auth-tables-schema";
-import { and, eq } from "drizzle-orm";
 
 /** Adjusted from @auth/drizzle-adapter  */
 export function authPgDrizzleAdapter(
-  client: InstanceType<typeof PgDatabase>
+  client: InstanceType<typeof PgDatabase>,
 ): Adapter {
   const { users, accounts, sessions, verificationTokens } = {
     accounts: authAccounts,
@@ -102,24 +102,23 @@ export function authPgDrizzleAdapter(
       return account;
     },
     async getUserByAccount(account) {
-      const dbAccount =
-        (await client
-          .select()
-          .from(accounts)
-          .where(
-            and(
-              eq(accounts.providerAccountId, account.providerAccountId),
-              eq(accounts.provider, account.provider)
-            )
-          )
-          .leftJoin(users, eq(accounts.userId, users.id))
-          .then((res) => res[0])) ?? null;
+      const dbAccount = await client
+        .select()
+        .from(accounts)
+        .where(
+          and(
+            eq(accounts.providerAccountId, account.providerAccountId),
+            eq(accounts.provider, account.provider),
+          ),
+        )
+        .leftJoin(users, eq(accounts.userId, users.id))
+        .limit(1);
 
-      if (!dbAccount) {
+      if (dbAccount.length === 0) {
         return null;
       }
 
-      return dbAccount.auth_users;
+      return dbAccount[0].auth_users;
     },
     async deleteSession(sessionToken) {
       const session = await client
@@ -144,8 +143,8 @@ export function authPgDrizzleAdapter(
           .where(
             and(
               eq(verificationTokens.identifier, token.identifier),
-              eq(verificationTokens.token, token.token)
-            )
+              eq(verificationTokens.token, token.token),
+            ),
           )
           .returning()
           .then((res) => res[0] ?? null);
@@ -166,8 +165,8 @@ export function authPgDrizzleAdapter(
         .where(
           and(
             eq(accounts.providerAccountId, account.providerAccountId),
-            eq(accounts.provider, account.provider)
-          )
+            eq(accounts.provider, account.provider),
+          ),
         )
         .returning()
         .then((res) => res[0] ?? null);

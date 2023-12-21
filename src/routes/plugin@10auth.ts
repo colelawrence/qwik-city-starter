@@ -1,8 +1,8 @@
-import { serverAuth$ } from "@builder.io/qwik-auth";
 import type { Provider } from "@auth/core/providers";
-import { createEmailAuthProvider } from "../auth/createEmailAuthProvider";
+import { serverAuth$ } from "@builder.io/qwik-auth";
 import { authPgDrizzleAdapter } from "~/auth/authPgDrizzleAdapter";
 import { expectEnvVar } from "~/expectEnvVar";
+import { createEmailAuthProvider } from "../auth/createEmailAuthProvider";
 import { loadRequestCtx } from "./plugin@01requestCtx";
 
 export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
@@ -13,7 +13,7 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
       secret: expectEnvVar(
         env,
         "AUTH_SECRET",
-        "random string used to hash tokens, sign cookies and generate cryptographic keys"
+        "random string used to hash tokens, sign cookies and generate cryptographic keys",
       ),
       trustHost: true,
       // @autoplay/workerlog happens to work with the expected types
@@ -22,10 +22,7 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
           logger.debug("auth.js debug", { message, metadata });
         },
         error(error) {
-          logger.error("auth.js error", {
-            error,
-            cause: error.cause,
-          });
+          logger.error("auth.js error", error);
         },
         warn(code) {
           logger.warn("auth.js warning", { code });

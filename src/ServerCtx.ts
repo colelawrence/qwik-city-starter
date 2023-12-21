@@ -1,14 +1,13 @@
-import postgres from "postgres";
-import { expectEnvVar } from "./expectEnvVar";
+import type { ILogger } from "@autoplay/workerlog";
 import createWorkerLoggerProvider, {
-  ILogger,
-  IWorkerLoggerProvider,
   WorkerLoggerLevel,
 } from "@autoplay/workerlog";
-import { DisposePool } from "./utils/DisposePool";
 import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 import * as schema from "./drizzle-schema";
-import { EnvGetter } from "./utils/EnvGetter";
+import { expectEnvVar } from "./expectEnvVar";
+import type { DisposePool } from "./utils/DisposePool";
+import type { EnvGetter } from "./utils/EnvGetter";
 
 export class ServerCtx {
   #logger: ILogger;
@@ -16,11 +15,26 @@ export class ServerCtx {
     public config: {
       env: EnvGetter;
       maxPgConnections: number;
-    }
+    },
   ) {
     const provider = createWorkerLoggerProvider({ console });
+    const level = expectEnvVar(
+      config.env,
+      "APP_LOG_LEVEL",
+      "logging level",
+      "trace",
+    );
+    const minLevel =
+      WorkerLoggerLevel[level.toUpperCase() as keyof typeof WorkerLoggerLevel];
+    if (minLevel == null) {
+      throw new Error(
+        `Invalid APP_LOG_LEVEL: ${level}, expected one of ${Object.keys(
+          WorkerLoggerLevel,
+        ).join(", ")}`,
+      );
+    }
     provider.configureLogging({
-      min: WorkerLoggerLevel.TRACE,
+      min: minLevel,
     });
     this.#logger = provider.getLogger();
   }
@@ -35,10 +49,10 @@ export class ServerCtx {
         expectEnvVar(
           this.config.env,
           "APP_PG_CONNECTION_STRING",
-          "connecting to postgres"
+          "connecting to postgres",
         ),
         // HMM: Should we limit the number of connections?
-        { max: this.config.maxPgConnections } // defaults to 10
+        { max: this.config.maxPgConnections }, // defaults to 10
       );
     }
     this.#sqlusers++;

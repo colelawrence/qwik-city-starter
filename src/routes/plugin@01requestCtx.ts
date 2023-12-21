@@ -20,11 +20,7 @@ export const onRequest: RequestHandler = async ({ next, sharedMap, env }) => {
     server,
   });
   sharedMap.set(REQUEST_CTX_SHARED_MAP_KEY, reqctx);
-  try {
-    await next();
-  } catch (err) {
-    throw err;
-  }
+  await next();
 };
 
 export const loadRequestCtx = (sharedMap: Map<string, unknown>) => {

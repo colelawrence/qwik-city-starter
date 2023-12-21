@@ -1,23 +1,24 @@
-import { SendVerificationRequestParams } from "@auth/core/providers";
-import Email, { EmailConfig } from "@auth/core/providers/email";
-import { ILogger } from "@autoplay/workerlog";
+import type { SendVerificationRequestParams } from "@auth/core/providers";
+import type { EmailConfig } from "@auth/core/providers/email";
+import Email from "@auth/core/providers/email";
+import type { ILogger } from "@autoplay/workerlog";
 import nodemailer from "nodemailer";
 import { expectEnvVar } from "~/expectEnvVar";
-import { EnvGetter } from "~/utils/EnvGetter";
+import type { EnvGetter } from "~/utils/EnvGetter";
 
 export function createEmailAuthProvider(
   env: EnvGetter,
-  logger: ILogger
+  logger: ILogger,
 ): EmailConfig {
   return Email({
     from: `${expectEnvVar(
       env,
       "APP_EMAIL_SENDER",
-      "for sender name a verification request"
+      "for sender name a verification request",
     )} <${expectEnvVar(
       env,
       "APP_EMAIL_SUPPORT_REPLY_TO",
-      "for sender email for a verification request"
+      "for sender email for a verification request",
     )}>`,
     sendVerificationRequest: sendVerificationRequest.bind(null, logger),
   });
@@ -29,7 +30,7 @@ async function sendVerificationRequest(
     identifier: email,
     url,
     provider: { server, from },
-  }: SendVerificationRequestParams
+  }: SendVerificationRequestParams,
 ) {
   const { hostname, host } = new URL(url);
   if (hostname === "localhost") {

@@ -1,4 +1,4 @@
-import { EnvGetter } from "./EnvGetter";
+import type { EnvGetter } from "./EnvGetter";
 
 export const nodejsEnvGetter: EnvGetter = {
   get(key) {

@@ -22,9 +22,9 @@ module.exports = {
     },
   },
   plugins: [
-    "@typescript-eslint",
-    require.resolve("eslint-plugin-qwik"),
-    require.resolve("eslint-plugin-only-warn"),
+    "@typescript-eslint/eslint-plugin",
+    "eslint-plugin-qwik",
+    "eslint-plugin-only-warn",
   ],
   rules: {
     "@typescript-eslint/no-explicit-any": "off",
