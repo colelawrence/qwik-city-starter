@@ -2,7 +2,7 @@
 
 You might follow the Prisma guide, [Setting up a local PostgreSQL database](https://www.prisma.io/dataguide/postgresql/setting-up-a-local-postgresql-database), for getting PostgreSQL running locally for development.
 
-1. Start up a local PostgreSQL server with matching credentials to the [.env](./.env.example) connection string.
+1. Start up a local PostgreSQL server with matching credentials to the [.env](./.env-example) connection string.
 
 2. Run Drizzle ORM migrations on database
 

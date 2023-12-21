@@ -1,5 +1,6 @@
 # Build
 /dist
+/server
 /lib
 /lib-types
 /server
