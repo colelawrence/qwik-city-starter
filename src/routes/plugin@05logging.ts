@@ -44,7 +44,9 @@ export const onRequest: RequestHandler = async ({
     // set various attributes
     attrs["http.status"] = statusCode;
     attrs.dur = Date.now() - startAt;
-    if (statusCode >= 300) {
+    if (statusCode >= 400) {
+      // attrs["..."] = headers.get("...");
+    } else if (statusCode >= 300) {
       attrs["response.headers.location"] = headers.get("location");
     }
 
