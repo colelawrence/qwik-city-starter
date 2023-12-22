@@ -1,18 +1,21 @@
-import { component$, useVisibleTask$ } from "@builder.io/qwik";
+import { component$ } from "@builder.io/qwik";
 import type { RequestHandler } from "@builder.io/qwik-city";
-import { Form, routeAction$, useNavigate, z } from "@builder.io/qwik-city";
+import { Form, routeAction$, z } from "@builder.io/qwik-city";
 import { File } from "buffer";
+import { RouterHead } from "~/components/router-head/router-head";
 import { models } from "~/model/model-tables-schema";
+import { useAppURL } from "~/routes/layout";
 import { getRequestCtx } from "~/routes/plugin@01requestCtx";
 import { authorizedUser } from "~/routes/plugin@10auth";
+import formStyles from "~/styles/form.module.css";
 import { generateID } from "~/utils/generateID";
-import formStyles from "./form.module.css";
 
 export const useFormAction = routeAction$(async (form, request) => {
   const bodyType = z.object({
     title: z.string().min(2, "Title must be at least 2 characters"),
     description: z.string(),
     model_json_file: z
+      // Hmm: Oddly, this is not a File type, but a string when JavaScript is disabled on the browser
       .instanceof(File)
       .refine(
         (file) => file.type === "application/json",
@@ -71,47 +74,62 @@ export const onRequest: RequestHandler = (request) => {
 
 export default component$(() => {
   const action = useFormAction();
-  const nav = useNavigate();
-  useVisibleTask$(({ track }) => {
-    const actioned = track(action);
-    if (actioned?.success) {
-      nav(`/model/${actioned.id}/`);
-    }
-  });
+  const modelsBaseURL = useAppURL("/model/");
+  // const nav = useNavigate();
 
   return action.value?.success ? (
-    <div class="flex flex-col items-center">
-      <p>Model created</p>
-      <p>
-        <a href={`/model/${action.value.id}/`}>View model</a>
-      </p>
-    </div>
+    <>
+      <RouterHead>
+        <title>Model created</title>
+        <meta
+          http-equiv="refresh"
+          content={`0; url=${modelsBaseURL + action.value.id + "/"}`}
+        />
+      </RouterHead>
+      <div>
+        <h1>Model created</h1>
+      </div>
+    </>
   ) : (
-    <Form action={action} class={formStyles.form}>
+    <Form action={action} class={[formStyles.form, "max-w-sm mx-auto mb-20"]}>
       <div class={formStyles.field}>
-        <label for="title">Title</label>
+        <label for="title" class={formStyles.label}>
+          Title
+        </label>
         <input
           type="text"
           name="title"
           value={action.value?.form?.title as string | undefined}
+          class={formStyles.input}
         />
         <ErrorText error={action.value?.error?.title} />
       </div>
       <div class={formStyles.field}>
-        <label for="description">Description</label>
+        <label for="description" class={formStyles.label}>
+          Description
+        </label>
         <textarea
           name="description"
           value={action.value?.form?.["description"] as string | undefined}
+          class={formStyles.input}
         />
         <ErrorText error={action.value?.error?.description} />
       </div>
       <div class={formStyles.field}>
-        <label for="model_json_file">Model JSON</label>
+        <label for="model_json_file" class={formStyles.label}>
+          Model JSON
+        </label>
         {/* Json file */}
-        <input type="file" name="model_json_file" />
+        <input type="file" name="model_json_file" class={formStyles.input} />
         <ErrorText error={action.value?.error?.model_json_file} />
       </div>
-      <input type="submit" disabled={action.isRunning} />
+      <div class="flex items-center justify-between">
+        <input
+          type="submit"
+          disabled={action.isRunning}
+          class={formStyles.button}
+        />
+      </div>
       <ErrorText error={action.value?.error} />
     </Form>
   );
@@ -127,7 +145,7 @@ const ErrorText = component$(
   }) => {
     if (props.error?._errors.length) {
       return (
-        <div class="p-1 bg-red-950 text-red-300 rounded-sm">
+        <div class={formStyles.errorHelp}>
           {props.error._errors.map((error) => (
             <p key={error}>{error}</p>
           ))}
