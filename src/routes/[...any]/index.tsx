@@ -16,7 +16,7 @@ import { getRequestCtx } from "../plugin@01requestCtx";
 // `routeLoader$()` takes an async function to fetch content
 // from Builder with using `getContent()`.
 export const useBuilderProps = routeLoader$(
-  async ({ url, error, env, sharedMap }) => {
+  async ({ url, status, env, sharedMap }) => {
     const logger = getRequestCtx(sharedMap).getLogger("useBuilderProps");
     const isPreviewing = url.searchParams.has("builder.preview");
     const model = "page";
@@ -47,10 +47,7 @@ export const useBuilderProps = routeLoader$(
         userAttributes,
         isPreviewing,
       });
-
-      if (!isPreviewing) {
-        throw error(404, "Page not found");
-      }
+      status(404);
     } else {
       logger.trace("builder content for path found", {
         apiKey,

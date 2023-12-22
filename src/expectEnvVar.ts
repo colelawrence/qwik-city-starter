@@ -3,7 +3,7 @@ import type { EnvGetter } from "./utils/EnvGetter";
 const errors: Error[] = [];
 export function expectEnvVar(
   env: EnvGetter,
-  name: keyof AppEnvServer,
+  name: keyof AppEnv,
   purpose: string,
   defaultValue?: string,
 ): string {
