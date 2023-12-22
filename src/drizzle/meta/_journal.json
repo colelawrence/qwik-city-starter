@@ -8,6 +8,13 @@
       "when": 1703004125408,
       "tag": "0000_exotic_thanos",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1703214193085,
+      "tag": "0001_boring_angel",
+      "breakpoints": true
     }
   ]
 }

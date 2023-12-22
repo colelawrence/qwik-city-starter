@@ -16,27 +16,7 @@ export default component$(() => (
           <QwikLogo height={50} width={143} />
         </a>
       </div>
-      <ul>
-        <li>
-          <HeaderAuthControl />
-        </li>
-        <li>
-          <a
-            href="https://qwik.builder.io/examples/introduction/hello-world/"
-            target="_blank"
-          >
-            Examples
-          </a>
-        </li>
-        <li>
-          <a
-            href="https://qwik.builder.io/tutorial/welcome/overview/"
-            target="_blank"
-          >
-            Tutorials
-          </a>
-        </li>
-      </ul>
+      <HeaderAuthControl />
     </div>
   </header>
 ));
@@ -45,11 +25,12 @@ const HeaderAuthControl = component$(() => {
   const session = useAuthSession();
   const user = session.value?.user;
   return (
-    <div>
+    <div class="flex items-center">
       {user ? (
-        <div class={styles.header}>
+        <div class="flex gap-2">
           <span>{user.email || user.name || "You"}</span>
           <LogoutButton />
+          <a href="/model/new/">Add Model</a>
         </div>
       ) : (
         <LoginButton />
@@ -66,6 +47,7 @@ const LoginButton = component$(() => {
   console.log(callbackUrl);
   return (
     <button
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       onClick$={() =>
         signIn.submit({
           // providerId: "email",
