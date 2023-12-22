@@ -8,10 +8,8 @@ export const onRequest: RequestHandler = async ({ next, sharedMap }) => {
   sharedMap.set(DISPOSEPOOL_SHARED_MAP_KEY, pool);
   try {
     await next();
+  } finally {
     pool.dispose();
-  } catch (err) {
-    pool.dispose();
-    throw err;
   }
 };
 

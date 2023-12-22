@@ -1,4 +1,4 @@
-import { type RequestHandler } from "@builder.io/qwik-city";
+import { RequestEventCommon, type RequestHandler } from "@builder.io/qwik-city";
 import { RequestCtx } from "~/RequestCtx";
 import { ServerCtx } from "~/ServerCtx";
 import { generateID } from "~/utils/generateID";
@@ -29,6 +29,8 @@ export const onRequest: RequestHandler = async ({
   await next();
 };
 
-export const getRequestCtx = (sharedMap: Map<string, unknown>) => {
+export const getRequestCtx = ({
+  sharedMap,
+}: Pick<RequestEventCommon, "sharedMap">) => {
   return sharedMap.get(REQUEST_CTX_SHARED_MAP_KEY) as RequestCtx;
 };

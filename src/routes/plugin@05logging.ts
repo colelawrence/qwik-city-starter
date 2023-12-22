@@ -11,7 +11,7 @@ export const onRequest: RequestHandler = async ({
   status,
   headers,
 }) => {
-  const ctx = getRequestCtx(sharedMap);
+  const ctx = getRequestCtx({ sharedMap });
   // could use performance.now for sub-millisecond accuracy, but we're keeping it simple
   const startAt = Date.now();
   const log = ctx.getLogger("public-request");
@@ -36,6 +36,7 @@ export const onRequest: RequestHandler = async ({
     } else if (statusCode >= 400) {
       attrs.err = err instanceof Error ? err.message : err;
     }
+    caughtError = err;
   } finally {
     clearTimeout(warning);
     const statusCode = status();

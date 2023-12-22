@@ -17,7 +17,7 @@ import { getRequestCtx } from "../plugin@01requestCtx";
 // from Builder with using `getContent()`.
 export const useBuilderProps = routeLoader$(
   async ({ url, status, env, sharedMap }) => {
-    const logger = getRequestCtx(sharedMap).getLogger("useBuilderProps");
+    const logger = getRequestCtx({ sharedMap }).getLogger("useBuilderProps");
     const isPreviewing = url.searchParams.has("builder.preview");
     const model = "page";
     const apiKey = expectEnvVar(
