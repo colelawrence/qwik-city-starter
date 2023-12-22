@@ -1,7 +1,7 @@
 import { component$, Slot } from "@builder.io/qwik";
-import Header from "../components/header/header";
-import Footer from "../components/footer/footer";
 import { routeLoader$ } from "@builder.io/qwik-city";
+import Footer from "../components/footer/footer";
+import Header from "../components/header/header";
 
 export default component$(() => {
   return (
@@ -24,7 +24,5 @@ export const useAppBaseURL = routeLoader$(({ url }) => {
 });
 
 export const useAppURL = (suffix: string) => {
-  const baseURL = useAppBaseURL().value;
-  console.log("useAppURL", { baseURL, suffix });
-  return baseURL + suffix.replace(/^\//, "");
+  return useAppBaseURL().value + suffix.replace(/^\//, "");
 };
