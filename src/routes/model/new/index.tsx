@@ -7,8 +7,8 @@ import { models } from "~/model/model-tables-schema";
 import { useAppURL } from "~/routes/layout";
 import { getRequestCtx } from "~/routes/plugin@01requestCtx";
 import { authorizedUser } from "~/routes/plugin@10auth";
-import formStyles from "~/styles/form.module.css";
 import { generateID } from "~/utils/generateID";
+import formStyles from "../../../styles/form.module.css";
 
 export const useFormAction = routeAction$(async (form, request) => {
   const bodyType = z.object({
@@ -91,47 +91,50 @@ export default component$(() => {
       </div>
     </>
   ) : (
-    <Form action={action} class={[formStyles.form, "max-w-sm mx-auto mb-20"]}>
-      <div class={formStyles.field}>
-        <label for="title" class={formStyles.label}>
-          Title
-        </label>
-        <input
-          type="text"
-          name="title"
-          value={action.value?.form?.title as string | undefined}
-          class={formStyles.input}
-        />
-        <ErrorText error={action.value?.error?.title} />
-      </div>
-      <div class={formStyles.field}>
-        <label for="description" class={formStyles.label}>
-          Description
-        </label>
-        <textarea
-          name="description"
-          value={action.value?.form?.["description"] as string | undefined}
-          class={formStyles.input}
-        />
-        <ErrorText error={action.value?.error?.description} />
-      </div>
-      <div class={formStyles.field}>
-        <label for="model_json_file" class={formStyles.label}>
-          Model JSON
-        </label>
-        {/* Json file */}
-        <input type="file" name="model_json_file" class={formStyles.input} />
-        <ErrorText error={action.value?.error?.model_json_file} />
-      </div>
-      <div class="flex items-center justify-between">
-        <input
-          type="submit"
-          disabled={action.isRunning}
-          class={formStyles.button}
-        />
-      </div>
-      <ErrorText error={action.value?.error} />
-    </Form>
+    <div class="p-8">
+      <h1 class="text-center mb-4">New model</h1>
+      <Form action={action} class={[formStyles.form, "max-w-sm mx-auto mb-20"]}>
+        <div class={formStyles.field}>
+          <label for="title" class={formStyles.label}>
+            Title
+          </label>
+          <input
+            type="text"
+            name="title"
+            value={action.value?.form?.title as string | undefined}
+            class={formStyles.input}
+          />
+          <ErrorText error={action.value?.error?.title} />
+        </div>
+        <div class={formStyles.field}>
+          <label for="description" class={formStyles.label}>
+            Description
+          </label>
+          <textarea
+            name="description"
+            value={action.value?.form?.["description"] as string | undefined}
+            class={formStyles.input}
+          />
+          <ErrorText error={action.value?.error?.description} />
+        </div>
+        <div class={formStyles.field}>
+          <label for="model_json_file" class={formStyles.label}>
+            Model JSON
+          </label>
+          {/* Json file */}
+          <input type="file" name="model_json_file" class={formStyles.input} />
+          <ErrorText error={action.value?.error?.model_json_file} />
+        </div>
+        <div class="flex items-center justify-between">
+          <input
+            type="submit"
+            disabled={action.isRunning}
+            class={formStyles.button}
+          />
+        </div>
+        <ErrorText error={action.value?.error} />
+      </Form>
+    </div>
   );
 });
 

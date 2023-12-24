@@ -2,7 +2,13 @@
   "css.lint.unknownAtRules": "ignore",
   "css.validate": false,
   "postcss.validate": false,
+  "emmet.preferences": {
+    // Fix closing style
+    "output.selfClosingStyle": "xhtml",
+  },
   "emmet.includeLanguages": {
+    // Use class instead of className
+    "typescriptreact": "html",
     "postcss": "css"
   },
   "cssModules.pathAlias": {

@@ -5,16 +5,15 @@ import {
   useAuthSignin,
   useAuthSignout,
 } from "~/routes/plugin@10auth";
-import { QwikLogo } from "../icons/qwik";
 import styles from "./header.module.css";
 
 export default component$(() => (
   <header class={styles.header}>
     <div class={styles.wrapper}>
       <div class={styles.logo}>
-        <a href="/" title="qwik">
+        {/* <a href="/" title="qwik">
           <QwikLogo height={50} width={143} />
-        </a>
+        </a> */}
       </div>
       <HeaderAuthControl />
     </div>
@@ -30,6 +29,7 @@ const HeaderAuthControl = component$(() => {
         <div class="flex gap-2">
           <span>{user.email || user.name || "You"}</span>
           <LogoutButton />
+          <a href="/model/">Models</a>
           <a href="/model/new/">Add Model</a>
         </div>
       ) : (
