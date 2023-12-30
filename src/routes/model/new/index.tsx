@@ -75,7 +75,6 @@ export const onRequest: RequestHandler = (request) => {
 export default component$(() => {
   const action = useFormAction();
   const modelsBaseURL = useAppURL("/model/");
-  // const nav = useNavigate();
 
   return action.value?.success ? (
     <>
@@ -100,6 +99,7 @@ export default component$(() => {
           </label>
           <input
             type="text"
+            id="title"
             name="title"
             value={action.value?.form?.title as string | undefined}
             class={formStyles.input}
@@ -111,6 +111,7 @@ export default component$(() => {
             Description
           </label>
           <textarea
+            id="description"
             name="description"
             value={action.value?.form?.["description"] as string | undefined}
             class={formStyles.input}
@@ -122,7 +123,12 @@ export default component$(() => {
             Model JSON
           </label>
           {/* Json file */}
-          <input type="file" name="model_json_file" class={formStyles.input} />
+          <input
+            type="file"
+            id="model_json_file"
+            name="model_json_file"
+            class={formStyles.input}
+          />
           <ErrorText error={action.value?.error?.model_json_file} />
         </div>
         <div class="flex items-center justify-between">

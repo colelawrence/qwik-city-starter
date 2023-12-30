@@ -14,6 +14,9 @@
   "cssModules.pathAlias": {
     "~": "${workspaceFolder}/src",
   },
+  "tailwindCSS.experimental.classRegex": [
+    "tw`([^`]*)`",
+  ],
   "typescript.tsdk": "./node_modules/typescript/lib",
   "search.exclude": {
     "**/node_modules": true,

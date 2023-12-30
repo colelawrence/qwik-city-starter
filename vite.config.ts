@@ -9,7 +9,7 @@ export default defineConfig(() => {
   return {
     plugins: [builderDevTools(), qwikCity(), qwikVite(), tsconfigPaths(), ...eslintPlugins],
     server: {
-      port: 5080,
+      port: 5180,
     },
     dev: {
       headers: {
